@@ -21,7 +21,9 @@
   },
   "homepage": "https://github.com/motonim/proshop#readme",
   "dependencies": {
-    "express": "^4.18.2"
+    "bcryptjs": "^2.4.3",
+    "express": "^4.18.2",
+    "mongoose": "^7.3.0"
   },
   "devDependencies": {
     "concurrently": "^8.2.0",
