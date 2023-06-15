@@ -22,5 +22,3 @@ const users = [
 ]
 
 export default users;
-
-test
