@@ -3,8 +3,6 @@ import { updateCart } from '../utils/cartUtils.js'
 
 const initialState = localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : {cartItems: []}
 
-
-
 const cartSlice = createSlice({
     name: 'cart',
     initialState,
@@ -21,10 +19,16 @@ const cartSlice = createSlice({
             }
 
             return updateCart(state)
+        },
+        removeFromCart: (state, action) => {
+            state.cartItems = state.cartItems.filter((item) => item._id !== action.payload) // the ID that is to be passed to this remove from cart function is going to be in the action's payload
+            // so now state.cartItems will have all the items except the one the use wanna delete
+
+            return updateCart(state)
         }
     }
 })
 
-export const { addToCart } = cartSlice.actions
+export const { addToCart, removeFromCart } = cartSlice.actions
 
 export default cartSlice.reducer

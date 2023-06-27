@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Row, Col, ListGroup, Image, Form, Button, Card } from 'react-bootstrap'
 import { FaTrash } from 'react-icons/fa'
 import Message from '../components/Message'
-import { addToCart } from '../slices/cartSlice.js'
+import { addToCart, removeFromCart } from '../slices/cartSlice.js'
 
 const CartScreens = () => {
     const navigate = useNavigate()
@@ -15,6 +15,14 @@ const CartScreens = () => {
 
     const addToCartHandler = async (product, qty) => {
         dispatch(addToCart({...product, qty}))
+    }
+
+    const removeFromCartHandler = async (id) => {
+        dispatch(removeFromCart(id)) // the id will be stored in action(action.payload?)
+    }
+
+    const checkoutHandler = () => {
+        navigate('/login?redirect=/shipping') // if not logged in, it'll redirect to the login page, if logged in, it'll go to shipping
     }
 
   return ( <Row>
@@ -52,7 +60,7 @@ const CartScreens = () => {
                                 </Form.Control>
                             </Col>
                             <Col md={2}>
-                                <Button type='button' variant='light'>
+                                <Button type='button' variant='light' onClick={ () => removeFromCartHandler(item._id) }>
                                     <FaTrash />
                                 </Button>
                             </Col>
@@ -72,7 +80,12 @@ const CartScreens = () => {
                     $ { cartItems.reduce((accu, item) => accu + item.qty * item.price, 0).toFixed(2) }
                 </ListGroup.Item>
                 <ListGroup.Item>
-                    <Button type='button' className='btn-block' disabled={ cartItems.length === 0 }>
+                    <Button 
+                        type='button' 
+                        className='btn-block' 
+                        disabled={ cartItems.length === 0 }
+                        onClick={ checkoutHandler }
+                    >
                         Proceed To Checkout
                     </Button>
                 </ListGroup.Item>
